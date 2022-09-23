@@ -30,27 +30,30 @@
                     
                     <!-- follow 状態で条件分岐 -->
                     @if(Auth::user()->followings()->where('users.id', $tweet->user->id)->exists())
-                    <!-- unfollow ボタン -->
-                    <form action="{{ route('unfollow', $tweet->user) }}" method="POST" class="text-left">
-                      @csrf
-                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-red py-1 px-2 focus:outline-none focus:shadow-outline">
-                        <svg class="h-6 w-6 text-red-500" fill="yellow" viewBox="0 0 24 24" stroke="red">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                        </svg>
-                        {{ $tweet->user->followers()->count() }}
-                      </button>
-                    </form>
-                    @else
-                    <!-- follow ボタン -->
-                    <form action="{{ route('follow', $tweet->user) }}" method="POST" class="text-left">
-                      @csrf
-                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-black py-1 px-2 focus:outline-none focus:shadow-outline">
-                        <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="black">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                        </svg>
-                        {{ $tweet->user->followers()->count() }}
-                      </button>
-                    </form>
+                      <!-- unfollow ボタン -->
+                      <form action="{{ route('unfollow', $tweet->user) }}" method="POST" class="text-left">
+                        @csrf
+                        <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-red py-1 px-2 focus:outline-none focus:shadow-outline">
+                          <svg class="h-6 w-6 text-red-500" fill="yellow" viewBox="0 0 24 24" stroke="red">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+                          </svg>
+                          {{ $tweet->user->followers()->count() }}
+                        </button>
+                      </form>
+                      @else
+                      <!-- follow ボタン -->
+                      <!-- 🔽自分にフォローボタンは出さない条件分岐-->
+                      @if($tweet->user->id !== Auth::id())
+                        <form action="{{ route('follow', $tweet->user) }}" method="POST" class="text-left">
+                          @csrf
+                          <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-black py-1 px-2 focus:outline-none focus:shadow-outline">
+                            <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
+                            </svg>
+                            {{ $tweet->user->followers()->count() }}
+                          </button>
+                        </form>
+                      @endif
                     @endif
                   </div>
 
