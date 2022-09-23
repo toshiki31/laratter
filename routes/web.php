@@ -7,6 +7,8 @@ use App\Http\Controllers\TweetController;
 use App\Http\Controllers\FavoriteController;
 
 use App\Http\Controllers\FollowController;
+
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +21,14 @@ use App\Http\Controllers\FollowController;
 */
 
 Route::group(['middleware' => 'auth'], function () {
+  //（検索画面）
+  Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
+  //（検索処理）
+  Route::get('/tweet/search/result', [SearchController::class, 'index'])->name('search.result');
+  //タイムライン
+  Route::get('/tweet/timeline', [TweetController::class, 'timeline'])->name('tweet.timeline');
+  //フォロー一覧
+  Route::get('user/{user}', [FollowController::class, 'show'])->name('follow.show');
   // フォローする
   Route::post('user/{user}/follow', [FollowController::class, 'store'])->name('follow');
   Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');
