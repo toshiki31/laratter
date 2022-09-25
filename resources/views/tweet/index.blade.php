@@ -33,10 +33,11 @@
                       <!-- unfollow ボタン -->
                       <form action="{{ route('unfollow', $tweet->user) }}" method="POST" class="text-left">
                         @csrf
-                        <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-red py-1 px-2 focus:outline-none focus:shadow-outline">
-                          <svg class="h-6 w-6 text-red-500" fill="yellow" viewBox="0 0 24 24" stroke="red">
+                        <button type="submit" class="flex bg-blue-400 font-medium text-sm text-white mx-2 py-1 px-2 rounded-full">
+                          <!--<svg class="h-6 w-6 text-red-500" fill="yellow" viewBox="0 0 24 24" stroke="red">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                          </svg>
+                          </svg>-->
+                          フォロー中
                           {{ $tweet->user->followers()->count() }}
                         </button>
                       </form>
@@ -46,10 +47,11 @@
                       @if($tweet->user->id !== Auth::id())
                         <form action="{{ route('follow', $tweet->user) }}" method="POST" class="text-left">
                           @csrf
-                          <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-black py-1 px-2 focus:outline-none focus:shadow-outline">
-                            <svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                          <button type="submit" class="flex bg-blue-400 font-medium text-sm text-white mx-2 py-1 px-2 rounded-full">
+                            <!--<svg class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="black">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
-                            </svg>
+                            </svg>-->
+                            フォローする
                             {{ $tweet->user->followers()->count() }}
                           </button>
                         </form>
@@ -60,7 +62,7 @@
                   <!--詳細画面へのリンク -->
                   <a href="{{ route('tweet.show',$tweet->id) }}">
                     <!--誰がツイートしたのかを表示-->
-                    <p class="text-left text-grey-dark">{{$tweet->user->name}}</p>
+                    <!--<p class="text-left text-grey-dark">{{$tweet->user->name}}</p>-->
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$tweet->tweet}}</h3>
                   </a>
                   <h3 class="text-left font-bold text-lg text-grey-dark">{{$tweet->description}}</h3>
