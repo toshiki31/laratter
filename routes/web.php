@@ -9,6 +9,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FollowController;
 
 use App\Http\Controllers\SearchController;
+
+use App\Http\Controllers\RetweetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,9 @@ use App\Http\Controllers\SearchController;
 */
 
 Route::group(['middleware' => 'auth'], function () {
+  //retweet
+  Route::post('tweet/{tweet}/retweets', [RetweetController::class, 'store'])->name('retweets');
+  Route::post('tweet/{tweet}/unretweets', [RetweetController::class, 'destroy'])->name('unretweets');
   //（検索画面）
   Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
   //（検索処理）

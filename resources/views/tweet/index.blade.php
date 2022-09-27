@@ -92,6 +92,33 @@
                       </button>
                     </form>
                     @endif
+
+                    <!--ここからリツイート用-->
+                    <!-- retweet 状態で条件分岐 -->
+                    @if($tweet->retweeters()->where('user_id', Auth::id())->exists())
+                    <!-- unretweet ボタン -->
+                    <form action="{{ route('unretweets',$tweet) }}" method="POST" class="text-left">
+                      @csrf
+                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-red py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-8 w-8 text-green-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  
+                          <polyline points="17 1 21 5 17 9" />  <path d="M3 11V9a4 4 0 0 1 4-4h14" />  <polyline points="7 23 3 19 7 15" />  <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+                        </svg>
+                        {{ $tweet->retweeters()->count() }}
+                      </button>
+                    </form>
+                    @else
+                    <!-- retweet ボタン -->
+                    <form action="{{ route('retweets',$tweet) }}" method="POST" class="text-left">
+                      @csrf
+                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-black py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-8 w-8 text-black-500"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  
+                          <polyline points="17 1 21 5 17 9" />  <path d="M3 11V9a4 4 0 0 1 4-4h14" />  <polyline points="7 23 3 19 7 15" />  <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+                        </svg>
+                        {{ $tweet->retweeters()->count() }}
+                      </button>
+                    </form>
+                    @endif
+                    <!--ここまでリツイート用-->
                     
                     <!-- 🔽 条件分岐でログインしているユーザが投稿したtweetのみ編集ボタンと削除ボタンが表示される -->
                     @if ($tweet->user_id === Auth::user()->id)

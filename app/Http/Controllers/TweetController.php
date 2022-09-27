@@ -127,16 +127,16 @@ class TweetController extends Controller
         return redirect()->route('tweet.index');
     }
 
-    public function mydata()
-    {
-        // Userモデルに定義したリレーションを使用してデータを取得する．
-        $tweets = User::query()
-        ->find(Auth::user()->id)
-        ->userTweets()
-        ->orderBy('created_at','desc')
-        ->get();
-        return view('tweet.index', compact('tweets'));
-    }
+    // public function mydata()
+    // {
+    //     // Userモデルに定義したリレーションを使用してデータを取得する．
+    //     $tweets = User::query()
+    //     ->find(Auth::user()->id)
+    //     ->userTweets()
+    //     ->orderBy('created_at','desc')
+    //     ->get();
+    //     return view('tweet.index', compact('tweets'));
+    // }
 
     public function timeline()
     {
@@ -149,5 +149,20 @@ class TweetController extends Controller
         ->orderBy('updated_at', 'desc')
         ->get();
     return view('tweet.index', compact('tweets'));
+    }
+
+    //mydata+retweet
+    public function mydata()
+    {
+        // リツイートしたツイートを取得する
+        $retweets = User::find(Auth::id())->retweets->pluck('id')->all();
+        //ddd($retweets);
+        // 自分とフォローしている人が投稿したツイートを取得する
+        $tweets = Tweet::query()
+            ->where('user_id', Auth::id())
+            ->orWhereIn('id', $retweets)  
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return view('tweet.index', compact('tweets'));
     }
 }

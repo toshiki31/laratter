@@ -30,4 +30,10 @@ class Tweet extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function retweeters()
+    {
+        //return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class, "retweets", "tweet_id", "user_id")->withTimestamps();
+    }
 }
