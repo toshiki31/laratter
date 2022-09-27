@@ -62,3 +62,10 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## phase1の課題について
+
+・indexにツイートのdescriptionを表示
+・フォローボタンの変更
+・リツイートボタンの作成
+・mypageに自分の投稿と自分がリツイートした投稿を表示
